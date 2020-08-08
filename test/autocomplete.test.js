@@ -1,3 +1,21 @@
+//* Check if DOM element appears on webpage
+const waitFor = (selector) => {
+  return new Promise((resolve, reject) => {
+    const interval = setInterval(() => {
+      if (document.querySelector(selector)) {
+        clearInterval(interval);
+        clearTimeout(timeout);
+        resolve();
+      }
+    }, 30);
+
+    const timeout = setTimeout(() => {
+      clearInterval(interval);
+      reject();
+    }, 2000);
+  });
+};
+
 //* Setup testing environment before every test
 //* Known as a hook
 beforeEach(() => {
@@ -26,10 +44,12 @@ it('Dropdown starts closed', () => {
 });
 
 //* Check if dropdown is open after search
-it('After searching, dropdown opens up', () => {
+it('After searching, dropdown opens up', async () => {
   const input = document.querySelector('input');
   input.value = 'avengers';
   input.dispatchEvent(new Event('input'));
+
+  await waitFor('.dropdown-item');
 
   const dropdown = document.querySelector('.dropdown');
 
