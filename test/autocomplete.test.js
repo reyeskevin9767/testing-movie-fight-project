@@ -15,7 +15,6 @@ it('Shows an autocomplete', () => {
 
   const dropdown = document.querySelector('.dropdown');
 
-  
-
-
+  //* Check if dropdown does not have 'is-active'
+  expect(dropdown.className).not.to.include('is-active');
 });
